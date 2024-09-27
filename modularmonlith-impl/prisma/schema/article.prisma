@@ -1,0 +1,17 @@
+model Article {
+    id        String   @id @db.Uuid
+    title     String
+    content   String
+    authorId  String   @db.Uuid
+    createdAt DateTime
+
+    updates ArticleUpdated[]
+}
+
+model ArticleUpdated {
+    article   Article  @relation(fields: [articleId], references: [id])
+    articleId String   @db.Uuid
+    updatedAt DateTime
+
+    @@unique([articleId, updatedAt])
+}

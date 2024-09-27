@@ -1,0 +1,7 @@
+model Bookmark {
+    userId    String   @db.Uuid
+    articleId String   @db.Uuid
+    createdAt DateTime
+
+    @@id([articleId, userId])
+}

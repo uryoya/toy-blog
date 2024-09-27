@@ -1,0 +1,28 @@
+model User {
+    id        String   @id @db.Uuid
+    email     String   @unique
+    createdAt DateTime
+
+    profile   UserProfile?
+    following Follow[]
+    follower  Follow[]     @relation("followee")
+}
+
+model UserProfile {
+    user     User   @relation(fields: [userId], references: [id])
+    userId   String @id @db.Uuid
+    username String
+    bio      String
+    avatar   String
+    website  String
+}
+
+model Follow {
+    user       User     @relation(fields: [userId], references: [id])
+    userId     String   @db.Uuid
+    followee   User     @relation("followee", fields: [followeeId], references: [id])
+    followeeId String   @db.Uuid
+    createdAt  DateTime
+
+    @@id([userId, followeeId])
+}
